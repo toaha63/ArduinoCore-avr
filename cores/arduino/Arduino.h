@@ -20,19 +20,20 @@
 #ifndef Arduino_h
 #define Arduino_h
 
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-#include <math.h>
+#include<stdlib.h>
+#include<stdbool.h>
+#include<string.h>
+#include<math.h>
 
-#include <avr/pgmspace.h>
-#include <avr/io.h>
-#include <avr/interrupt.h>
+#include<avr/pgmspace.h>
+#include<avr/io.h>
+#include<avr/interrupt.h>
 
 #include "binary.h"
 
 #ifdef __cplusplus
-extern "C"{
+extern "C"
+{
 #endif
 
 void yield(void);
@@ -44,7 +45,7 @@ void yield(void);
 #define OUTPUT 0x1
 #define INPUT_PULLUP 0x2
 
-#define PI 3.1415926535897932384626433832795
+#define PI 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
 #define HALF_PI 1.5707963267948966192313216916398
 #define TWO_PI 6.283185307179586476925286766559
 #define DEG_TO_RAD 0.017453292519943295769236907684886
