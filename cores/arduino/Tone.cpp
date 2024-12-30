@@ -38,7 +38,7 @@ Version Modified By Date     Comments
 #include <avr/pgmspace.h>
 #include "Arduino.h"
 #include "pins_arduino.h"
-
+#include <stdio.h>
 #if defined(__AVR_ATmega8__) || defined(__AVR_ATmega128__)
 #define TCCR2A TCCR2
 #define TCCR2B TCCR2
@@ -477,6 +477,47 @@ void disableTimer(uint8_t _timer)
 }
 
 
+int melody(int pin, int notes[], int noteSize, int durationsInMS[], int durationSize)
+{
+    static int currentNoteIndex = 0;
+    static unsigned long noteStartTime = 0;
+    static bool isPlaying = false;
+
+    while(noteSize != durationSize)
+    {
+        return -1;
+    }
+
+    if (!isPlaying)
+    {
+        isPlaying = true;
+        currentNoteIndex = 0;
+        noteStartTime = millis();
+        tone(pin, notes[currentNoteIndex]);
+    }
+    else
+    {
+        unsigned long currentTime = millis();
+        if (currentTime - noteStartTime >= durationsInMS[currentNoteIndex])
+        {
+            noTone(pin);
+            currentNoteIndex++;
+            if (currentNoteIndex < noteSize && notes[currentNoteIndex] != -1 && durationsInMS[currentNoteIndex] != -1)
+            {
+                tone(pin, notes[currentNoteIndex]);
+                noteStartTime = currentTime;
+            }
+            else
+            {
+                isPlaying = false;
+                currentNoteIndex = 0; 
+                return 0;
+            }
+        }
+    }
+
+    return 1;
+}
 void noTone(uint8_t _pin)
 {
   int8_t _timer = -1;
